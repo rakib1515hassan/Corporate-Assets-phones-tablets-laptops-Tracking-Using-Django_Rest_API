@@ -79,6 +79,13 @@ class EmployeeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
 
+# Only employee see this information not update or delete
+class EmployeeAllocationListView(generics.ListAPIView):
+    serializer_class = DeviceAllocationSerializer
+    permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        employee_id = self.kwargs['pk']
+        return DeviceAllocation.objects.filter(employee=employee_id)
 
 #__________________________________________________________________
