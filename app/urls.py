@@ -12,9 +12,12 @@ urlpatterns = [
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    
+
     # For TokenVerifyView
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    # User Registration
+    path('user-registration/', UserRegistrationView.as_view(), name='user-registration'),
 
 
     path('user/', UserAPIView.as_view(), name='user'),
