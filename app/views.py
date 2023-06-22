@@ -22,7 +22,7 @@ class UserAPIView(RetrieveAPIView):
     
 
 # Company Views----------------------------------------------------
-class CompanyCreateView(generics.ListCreateAPIView):
+class CompanyListCreateView(generics.ListCreateAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
@@ -37,10 +37,48 @@ class CompanyRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 #__________________________________________________________________
 
 
+
+
+
 # Device Views----------------------------------------------------
 class DeviceListCreateView(generics.ListCreateAPIView):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+
+class DeviceRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+
+class DeviceAllocationView(generics.UpdateAPIView):
+    queryset = DeviceAllocation.objects.all()
+    serializer_class = DeviceAllocationSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+#__________________________________________________________________
+
+
+
+
+# Employee Views----------------------------------------------------
+class EmployeeListCreateView(generics.ListCreateAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+class EmployeeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+
+
 
 #__________________________________________________________________

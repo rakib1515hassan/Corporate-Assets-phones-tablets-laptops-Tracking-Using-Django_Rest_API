@@ -34,6 +34,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
 class DeviceAllocationSerializer(serializers.ModelSerializer):
     device = DeviceSerializer(read_only=True)
     employee = EmployeeSerializer(read_only=True)

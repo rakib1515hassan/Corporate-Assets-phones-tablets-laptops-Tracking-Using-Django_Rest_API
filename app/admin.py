@@ -21,7 +21,7 @@ class DeviceAdmin(admin.ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('get_username', 'get_email', 'company', 'get_devices', 'get_devices_serial')
+    list_display = ( 'id' ,'get_username', 'get_email', 'company', 'get_devices', 'get_devices_serial' )
 
     def get_username(self, obj):
         return obj.user.username
@@ -37,4 +37,4 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 @admin.register(DeviceAllocation)
 class DeviceAssignmentAdmin(admin.ModelAdmin):
-    list_display = ('device', 'employee', 'given_date', 'updated_at', 'return_date')
+    list_display = ( 'id' ,'device', 'employee', 'given_date', 'updated_at', 'return_date' )

@@ -20,11 +20,20 @@ urlpatterns = [
     path('user/', UserAPIView.as_view(), name='user'),
 
     # Company URLs
-    path('company-create/', CompanyCreateView.as_view(), name='company-create-view'),
+    path('company-create/', CompanyListCreateView.as_view(), name='company-create-view'),
     path('company_update/<int:pk>/', CompanyRetrieveUpdateDestroyView.as_view(), name='company_update-view'),
 
     # Device URLs
     path('devices-create/', DeviceListCreateView.as_view(), name='device-list-create'),
+    path('devices-update/<int:pk>/', DeviceRetrieveUpdateDestroyView.as_view(), name='device-retrieve-update-destroy'),
+    path('devices-allocation/<int:pk>/', DeviceAllocationView.as_view(), name='device-allocation'),
+
+
+    # Employee URLs
+    path('employees-create/', EmployeeListCreateView.as_view(), name='employee-list-create'),
+    path('employees-update/<int:pk>/', EmployeeRetrieveUpdateDestroyView.as_view(), name='employee-retrieve-update-destroy'),
+    
+    # path('employees/<int:pk>/assignments/', EmployeeAssignmentsListView.as_view(), name='employee-assignments-list'),
 
 
 
