@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
-    'app',
+    'Account',
+    'Assets',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,22 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-            "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-            "REFRESH_TOKEN_LIFETIME": timedelta(days=20),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=59),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+
+
+# Email Configaretion----------------------------------------------------
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'OTF Team <rakibdiuhassan@gmail.com>'
+
+EMAIL_HOST_USER = "rakibdiuhassan@gmail.com"
+EMAIL_HOST_PASSWORD = "kczmycrfhjewqwqy"
+
+
+# EMAIL_HOST_USER = "your@email.com"
+# EMAIL_HOST_PASSWORD = "your password"
