@@ -49,25 +49,22 @@ class CompanyRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # # Device Views----------------------------------------------------
-# class DeviceListCreateView(generics.ListCreateAPIView):
-#     queryset = Device.objects.all()
-#     serializer_class = DeviceSerializer
-#     permission_classes = [IsAuthenticated, IsAdminUser]
+## URL = ( http://127.0.0.1:8000/assets/devices/ )
+class DeviceListCreateView(generics.ListCreateAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = DeviceSerializer
+    queryset = Device.objects.all()
 
 
-
-# class DeviceRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Device.objects.all()
-#     serializer_class = DeviceSerializer
-#     permission_classes = [IsAuthenticated, IsAdminUser]
-
-
-
-# class DeviceAllocationView(generics.UpdateAPIView):
-#     queryset = DeviceAllocation.objects.all()
-#     serializer_class = DeviceAllocationSerializer
-#     permission_classes = [IsAuthenticated, IsAdminUser]
-
+## URL = ( http://127.0.0.1:8000/assets/devices/<int:pk>/)
+class DeviceRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = DeviceSerializer
+    queryset = Device.objects.all()
 
 # #__________________________________________________________________
 
@@ -75,25 +72,64 @@ class CompanyRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 # # Employee Views----------------------------------------------------
-# class EmployeeListCreateView(generics.ListCreateAPIView):
-#     queryset = Employee.objects.all()
-#     serializer_class = EmployeeSerializer
-#     permission_classes = [IsAuthenticated, IsAdminUser]
+## URL = ( http://127.0.0.1:8000/assets/employees/)
+class EmployeeListCreateView(generics.ListCreateAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = EmployeeSerializer
+    queryset = Employee.objects.all()
 
 
-# class EmployeeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Employee.objects.all()
-#     serializer_class = EmployeeSerializer
-#     permission_classes = [IsAuthenticated, IsAdminUser]
+
+## URL = ( http://127.0.0.1:8000/assets/employees/<int:pk>/)
+class EmployeeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = EmployeeSerializer
+    queryset = Employee.objects.all()
 
 
-# # Only employee see this information not update or delete
-# class EmployeeAllocationListView(generics.ListAPIView):
-#     serializer_class = DeviceAllocationSerializer
-#     permission_classes = [IsAuthenticated]
 
-#     def get_queryset(self):
-#         employee_id = self.kwargs['pk']
-#         return DeviceAllocation.objects.filter(employee=employee_id)
+
+## URL = ( http://127.0.0.1:8000/assets/devices-allocation/)
+class DeviceAllocationView(generics.ListCreateAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = DeviceAllocationSerializer
+    queryset = DeviceAllocation.objects.all()
+
+
+
+
+## URL = ( http://127.0.0.1:8000/assets/devices-allocation/<int:pk>/)
+class DeviceAllocationModifyView(generics.RetrieveUpdateDestroyAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = DeviceAllocationSerializer
+    queryset = DeviceAllocation.objects.all()
+
 
 #__________________________________________________________________
+
+
+
+## Only employee see this information not update or delete-----------------
+
+## URL = ( http://127.0.0.1:8000/assets/employees-allocated-device/<int:pk>/)
+class EmployeeAllocationListView(generics.RetrieveAPIView):
+    # authentication_classes = [BasicAuthentication]
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = DeviceAllocationSerializer
+
+    def get_queryset(self):
+        employee_id = self.kwargs['pk']
+        emp_obj = Employee.objects.filter(id = employee_id).first()
+        if self.request.user == emp_obj.user:
+            return DeviceAllocation.objects.filter(employee=employee_id)
+
+    

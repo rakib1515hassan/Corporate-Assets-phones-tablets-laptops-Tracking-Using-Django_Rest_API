@@ -73,7 +73,8 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'email',]
+        fields = '__all__'
+        # fields = ['id', 'username', 'first_name', 'last_name', 'email',]
 #_____________________________________________________________________________________________________
 
 
@@ -121,7 +122,7 @@ class SendPasswordResetEmailSerializer(serializers.Serializer):
             otp = random.randint(100000, 999999)
 
             #Django সেশনে টাইমআউট সেট করাহয়েছে
-            timeout_datetime = datetime.now() + timedelta( minutes = 5 )
+            timeout_datetime = datetime.now() + timedelta( minutes = 10 )
             self.context['request'].session['timeout'] = timeout_datetime.timestamp()
 
             if User_OTP.objects.filter(user = user).exists(): # পুরাতন otp থাকলে তাকে এখনে delete করে দিবে
@@ -168,7 +169,8 @@ class UserPasswordResetSerializer(serializers.Serializer):
         
         if password != password2:
             raise serializers.ValidationError("Password and Confirm Password doesn't match")
-        
+
+
         # যেই email and OTP_timeout আমরা serializers.py  এর SendPasswordResetEmailSerializer class থেকে Django session এর মাধ্যমে 
         # send করেছি তা receive করা হয়েছে email এবং timeout_timestamp veriable এর ভেতর।
         email = self.context['request'].session.get('email')
@@ -180,20 +182,25 @@ class UserPasswordResetSerializer(serializers.Serializer):
 
         user_obj = User.objects.get(email = email) 
 
-        otp_obj = User_OTP.objects.get(user = User.objects.get(email=email))
+        try:
+            otp_obj = User_OTP.objects.get(user = User.objects.get(email=email))
 
-        # print("---------------------------")
-        # print(f"Request User = {User.objects.get(email=email)}, Correct OTP = {otp_obj.otp}")
-        # print("---------------------------")
+            # print("---------------------------")
+            # print(f"Request User = {User.objects.get(email=email)}, Correct OTP = {otp_obj.otp}")
+            # print("---------------------------")
 
+            if otp != otp_obj.otp:
+                raise serializers.ValidationError("Your OTP doesn't match")
+
+            user_obj.set_password(password)
+            user_obj.save()
+            # OTP টিকে Delete করে দেয়া হয়েছে জাতে একবার Password set হয়ে গেলে দ্বিতীয়বার তা আর না Use করা যায়
+            User_OTP.objects.get(user = user_obj).delete()
+            return attrs
         
-        
-        if otp != otp_obj.otp:
-            raise serializers.ValidationError("Your OTP doesn't match")
 
-        user_obj.set_password(password)
-        user_obj.save()
-        return attrs
+        except User_OTP.DoesNotExist:
+            raise serializers.ValidationError("Your OTP is invelid.")
     
 #_____________________________________________________________________________________________________
 

@@ -1,0 +1,36 @@
+
+Corporate Assets(phones, tablets, laptops) Tracking Using Django_Rest_API/
+|-- manage.py
+|-- requirements.txt
+|
+|-- Core/
+|   |-- settings.py
+|   |-- urls.py
+|   |-- ...
+|
+|-- Account/
+|   |-- migrations/
+|   |-- admin.py
+|   |-- models.py
+|   |-- serializers.py
+|   |-- views.py
+|   |-- urls.py
+|   |-- ...
+|
+|-- Assets/
+|   |-- migrations/
+|   |-- admin.py
+|   |-- models.py
+|   |-- serializers.py
+|   |-- views.py
+|   |-- urls.py
+|   |-- ...
+|
+|-- static/
+|-- media/
+|-- templates/
+
+
+
+
+
